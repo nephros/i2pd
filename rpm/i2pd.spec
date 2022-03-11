@@ -52,6 +52,7 @@ Notices for SailfishOS:
   - the config lives in `/home/.system/var/lib/i2pd`, not `/etc`
   - the web console is reachable at http://127.0.0.1:7070
   - join the 'sailfishos' family!
+  - for more information, se the README at https://github.com/nephros/i2pd/blob/main/README.md
 
 %if "%{?vendor}" == "chum"
 PackageName: I2Pd
