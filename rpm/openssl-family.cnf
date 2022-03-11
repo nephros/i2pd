@@ -1,0 +1,18 @@
+[ req ]
+default_bits = 2048
+default_keyfile = ca.key
+encrypt_key = no
+default_md = sha256
+prompt = no
+utf8 = yes
+distinguished_name = my_req_distinguished_name
+CN = sailfishos.family.i2p.net
+
+[ my_req_distinguished_name ]
+C = EU
+ST = Undisclosed
+L = Haven
+O = SailfishOS:Chum CA
+OU = Port Authority
+CN = sailfishos.family.i2p.net
+

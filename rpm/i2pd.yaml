@@ -1,0 +1,95 @@
+Name: i2pd
+Summary: End-to-End encrypted and anonymous Internet daemon
+Version: 2.41.0
+Release: 0
+Group: Applications
+License: BSD-3-Clause
+URL: https://i2pd.website
+SCM: https://github.com/PurpleI2P/i2pd
+Sources:
+    - '%{name}-%{version}.tar.gz'
+    - '%{name}.conf'
+    - '%{name}.service'
+    - 'openssl-family.cnf'
+Description: |
+    %{summary}.
+
+    I2P (Invisible Internet Protocol) is a universal anonymous network layer.
+    All communications over I2P are anonymous and end-to-end encrypted,
+    participants don't reveal their real IP addresses.
+
+    I2P client is a software used for building and using anonymous I2P
+    networks. Such networks are commonly used for anonymous peer-to-peer
+    applications (filesharing, cryptocurrencies) and anonymous client-server
+    applications (websites, instant messengers, chat-servers).
+
+    I2P allows people from all around the world to communicate and share
+    information without restrictions.
+
+    Notices for SailfishOS:
+      - the config lives in `/home/.system/var/lib/i2pd`, not `/etc`
+      - join the 'sailfishos' family!
+
+    %if "%{?vendor}" == "chum"
+    PackageName: I2Pd
+    Type: console-application
+    PackagerName: nephros
+    Categories:
+     - Network
+    Custom:
+      Repo: https://github.com/PurpleI2P/i2pd
+    Icon: https://i2pd.website/images/favicon.png
+    Url:
+      Homepage: https://i2pd.website
+      Help: https://i2pd.readthedocs.io/en/latest
+      Donations: https://i2pd.website/#donations
+    %endif
+SetupOptions: -q -n %{name}-%{version}
+Macros:
+  - 'custom_vardir;/home/.system/%{_var}/lib'
+#Patches:
+#  - 'baz'
+Requires:
+  - systemd
+RequiresPost:
+  - systemd
+RequiresPostUn:
+  - systemd
+PkgBR:
+  - gcc-c++
+  - cmake
+  - boost-devel >= 1.49
+  - systemd
+  - openssl
+PkgConfigBR:
+  - libssl
+  - zlib
+Configure: cmake
+ConfigOptions:
+  - '-DCMAKE_BUILD_TYPE=Release'
+  # '-DWITH_AESNI=%ifarch %ix86'
+  # '-DWITH_BINARY=ON'
+  # '-DWITH_LIBRARY=ON'
+  # '-DWITH_STATIC=OFF'
+  # '-DWITH_UPNP=OFF'
+  # '-DWITH_ADDRSANITIZER=ON'
+  # '-DWITH_THREADSANITIZER=ON'
+Builder: none
+NoIconCache: true
+#BuildArch: noarch
+Files:
+  - '%license LICENSE'
+  - '%{_unitdir}/%{name}.service'
+  - '%{_bindir}/%{name}'
+  - '%{_libdir}/*.so'
+  - '%attr(775,root,inet) %dir %{custom_vardir}/%{name}'
+  - '%attr(775,root,inet) %dir %{custom_vardir}/%{name}/tunnels.d'
+  - '%attr(775,root,inet) %dir %{custom_vardir}/%{name}/addressbook'
+  - '%{custom_vardir}/%{name}/certificates/*/*'
+  - '%attr(640,root,inet) %config %{custom_vardir}/%{name}/family/sailfishos.crt'
+  - '%attr(640,root,inet) %config %{custom_vardir}/%{name}/family/sailfishos.key'
+  - '%config(noreplace) %{custom_vardir}/%{name}/%{name}.conf'
+  - '%config(noreplace) %{custom_vardir}/%{name}/%{name}.conf.example'
+  - '%config(noreplace) %{custom_vardir}/%{name}/tunnels.conf.example'
+
+
