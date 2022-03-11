@@ -1,6 +1,7 @@
 [Unit]
 Description=I2P Router
 Documentation=https://i2pd.readthedocs.io/en/latest/
+Documentation=https://github.com/nephros/i2pd/blob/main/README.md
 After=network.target
 After=local-fs.target
 After=home.mount
@@ -10,8 +11,8 @@ After=home.mount
 Group=inet
 RuntimeDirectory=i2pd
 RuntimeDirectoryMode=0700
-LogsDirectory=i2pd
-LogsDirectoryMode=0700
+#LogsDirectory=i2pd
+#LogsDirectoryMode=0700
 Type=forking
 ExecStart=/usr/bin/i2pd --datadir /home/.system/var/lib/i2pd --conf=/home/.system/var/lib/i2pd/i2pd.conf --tunconf=/home/.system/var/lib/i2pd/tunnels.conf --tunnelsdir=/home/.system/var/lib/i2pd/tunnels.conf.d --pidfile=/run/i2pd/i2pd.pid --daemon --service
 ExecReload=/bin/sh -c "kill -HUP $MAINPID"
