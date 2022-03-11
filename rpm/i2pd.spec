@@ -12,7 +12,7 @@ Name:       i2pd
 Summary:    End-to-End encrypted and anonymous Internet daemon
 Version:    2.41.0
 Release:    0
-Group:      Applications
+Group:      Applications/Internet
 License:    BSD-3-Clause
 URL:        https://i2pd.website
 Source0:    %{name}-%{version}.tar.gz
@@ -60,6 +60,7 @@ Type: console-application
 PackagerName: nephros
 Categories:
  - Network
+ - P2P
 Custom:
   Repo: https://github.com/PurpleI2P/i2pd
   PackagingRepo: https://github.com/nephros/i2pd
