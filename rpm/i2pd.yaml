@@ -28,6 +28,7 @@ Description: |
 
     Notices for SailfishOS:
       - the config lives in `/home/.system/var/lib/i2pd`, not `/etc`
+      - the web console is reachable at http://127.0.0.1:7070
       - join the 'sailfishos' family!
 
     %if "%{?vendor}" == "chum"
@@ -38,6 +39,7 @@ Description: |
      - Network
     Custom:
       Repo: https://github.com/PurpleI2P/i2pd
+      PackagingRepo: https://github.com/nephros/i2pd
     Icon: https://i2pd.website/images/favicon.png
     Url:
       Homepage: https://i2pd.website
