@@ -149,12 +149,12 @@ fi
 %{_bindir}/%{name}
 %{_libdir}/*.so
 %attr(775,root,inet) %dir %{custom_vardir}/%{name}
-%attr(775,root,inet) %dir %{custom_vardir}/%{name}/tunnels.d
+%attr(770,root,inet) %dir %{custom_vardir}/%{name}/tunnels.d
 %attr(775,root,inet) %dir %{custom_vardir}/%{name}/addressbook
 %{custom_vardir}/%{name}/certificates/*/*
 %attr(640,root,inet) %config %{custom_vardir}/%{name}/family/sailfishos.crt
 %attr(640,root,inet) %config %{custom_vardir}/%{name}/family/sailfishos.key
-%config(noreplace) %{custom_vardir}/%{name}/%{name}.conf
+%attr(640,root,inet) %config(noreplace) %{custom_vardir}/%{name}/%{name}.conf
 %config(noreplace) %{custom_vardir}/%{name}/%{name}.conf.example
 %config(noreplace) %{custom_vardir}/%{name}/tunnels.conf.example
 # >> files
