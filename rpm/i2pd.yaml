@@ -44,7 +44,7 @@ Description: |
       Help: https://i2pd.readthedocs.io/en/latest
       Donations: https://i2pd.website/#donations
     %endif
-SetupOptions: -q -n %{name}-%{version}
+SetupOptions: -q -n %{name}-%{version}/upstream
 Macros:
   - 'custom_vardir;/home/.system/%{_var}/lib'
 #Patches:
