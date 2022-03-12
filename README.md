@@ -61,6 +61,7 @@ If you do not want to use privoxy, the following applies:
      network.proxy.http = 127.0.0.1
      network.proxy.http_port = 4444
      network.proxy.type = 1
+     network.proxy.socks_remote_dns = true
      ```
 
 You will have to find a way to resolve .i2p addresses, as a proxy does not do that.
