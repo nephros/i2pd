@@ -7,7 +7,7 @@
             "title": "I2P",
             "translation_id": "settings_system-i2p",
             "order": 351,
-            "icon": "image://theme/icon-m-i2p",
+            "icon": "image://theme/icon-settings-i2p",
             "params": {
                 "source": "/usr/share/jolla-settings/pages/i2p/mainpage.qml"
             }

@@ -21,8 +21,8 @@ Page {
     ConfigurationGroup {
         id: proxyConf
         path: "/apps/i2p-button"
-        property bool browserProxy: true
-        property bool browserRestart: true
+        property bool browserProxy: false
+        property bool browserRestart: false
     }
 
     Timer {
@@ -36,7 +36,7 @@ Page {
 
     DBusInterface {
         id: systemdServiceIface
-        bus: DBus.SessionBus
+        bus: DBus.SystemBus
         service: 'org.freedesktop.systemd1'
         path: '/org/freedesktop/systemd1/unit/i2pd'
         iface: 'org.freedesktop.systemd1.Unit'
@@ -63,7 +63,7 @@ Page {
     }
 
     DBusInterface {
-        bus: DBus.SessionBus
+        bus: DBus.SystemBus
         service: 'org.freedesktop.systemd1'
         path: '/org/freedesktop/systemd1/unit/i2pd'
         iface: 'org.freedesktop.DBus.Properties'
@@ -74,7 +74,7 @@ Page {
     }
 
     DBusInterface {
-        bus: DBus.SessionBus
+        bus: DBus.SystemBus
         service: "org.freedesktop.systemd1"
         path: "/org/freedesktop/systemd1"
         iface: "org.freedesktop.systemd1.Manager"

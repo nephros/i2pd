@@ -11,7 +11,7 @@ Name:       i2pd
 
 Summary:    End-to-End encrypted and anonymous Internet daemon
 Version:    2.41.0
-Release:    0
+Release:    2
 Group:      Applications/Internet
 License:    BSD-3-Clause
 URL:        https://i2pd.website
@@ -72,6 +72,34 @@ Url:
 %endif
 
 
+%package ui
+Summary:    UI components for %{name}
+Group:      Applications/Internet
+BuildArch:  noarch
+Requires:   %{name}
+
+%description ui
+%{summary}.
+
+This package is the companion/settings app for I2Pd.
+
+I2P (Invisible Internet Protocol) is a universal anonymous network layer.
+All communications over I2P are anonymous and end-to-end encrypted,
+participants don't reveal their real IP addresses.
+
+%if "%{?vendor}" == "chum"
+PackageName: I2Pd Settings UI
+Type: desktop-application
+PackagerName: nephros
+Categories:
+ - Network
+ - P2P
+Custom:
+  PackagingRepo: https://github.com/nephros/i2pd
+Icon: https://i2pd.website/images/favicon.png
+%endif
+
+
 %prep
 %setup -q -n %{name}-%{version}/upstream
 
@@ -124,6 +152,14 @@ done
 popd
 install -m 640 -D %{_builddir}/family-cert/sailfishos.key %{buildroot}%{custom_vardir}/%{name}/family/sailfishos.key
 install -m 640 -D %{_builddir}/family-cert/sailfishos.crt %{buildroot}%{custom_vardir}/%{name}/family/sailfishos.crt
+
+## UI:
+pushd %{_builddir}/%{name}-%{version}/ui
+for f in $(find . -type f); do
+install -m 644 -D ${f} %{buildroot}/${f}
+done
+popd
+
 # << install post
 
 %post
@@ -161,3 +197,12 @@ fi
 %config(noreplace) %{custom_vardir}/%{name}/tunnels.conf.example
 # >> files
 # << files
+
+%files ui
+%defattr(-,root,root,-)
+%{_datadir}/%{name}-ui/*
+%{_datadir}/jolla-settings/entries/i2pd.json
+%{_datadir}/jolla-settings/pages/i2p/*
+%{_datadir}/themes/jolla-ambient/meegotouch/icons/*
+# >> files ui
+# << files ui

@@ -36,7 +36,7 @@ Switch {
 
     DBusInterface {
         id: systemdServiceIface
-        bus: DBus.SessionBus
+        bus: DBus.SystemBus
         service: 'org.freedesktop.systemd1'
         path: '/org/freedesktop/systemd1/unit/i2pd'
         iface: 'org.freedesktop.systemd1.Unit'
@@ -63,7 +63,7 @@ Switch {
     }
 
     DBusInterface {
-        bus: DBus.SessionBus
+        bus: DBus.SystemBus
         service: 'org.freedesktop.systemd1'
         path: '/org/freedesktop/systemd1/unit/i2pd'
         iface: 'org.freedesktop.DBus.Properties'
@@ -74,7 +74,7 @@ Switch {
     }
 
     DBusInterface {
-        bus: DBus.SessionBus
+        bus: DBus.SystemBus
         service: "org.freedesktop.systemd1"
         path: "/org/freedesktop/systemd1"
         iface: "org.freedesktop.systemd1.Manager"
@@ -88,7 +88,7 @@ Switch {
         }
     }
 
-    icon.source: "image://theme/icon-settings-i2pd"
+    icon.source: "image://theme/icon-settings-i2p"
     checked: activeState == "active"
     automaticCheck: false
     onClicked: {

@@ -1,7 +1,7 @@
 Name: i2pd
 Summary: End-to-End encrypted and anonymous Internet daemon
 Version: 2.41.0
-Release: 0
+Release: 2
 Group: Applications/Internet
 License: BSD-3-Clause
 URL: https://i2pd.website
@@ -97,3 +97,38 @@ Files:
   - '%config(noreplace) %{custom_vardir}/%{name}/tunnels.conf.example'
 
 
+
+SubPackages:
+    - Name:  ui
+      Summary: UI components for %{name}
+      Group: Applications/Internet
+      BuildArch: noarch
+      NoIconCache: true
+      AutoDepend: no
+      Requires:
+        - '%{name}'
+      Files:
+        - '%{_datadir}/%{name}-ui/*'
+        - '%{_datadir}/jolla-settings/entries/i2pd.json'
+        - '%{_datadir}/jolla-settings/pages/i2p/*'
+        - '%{_datadir}/themes/jolla-ambient/meegotouch/icons/*'
+      Description: |
+          %{summary}.
+
+          This package is the companion/settings app for I2Pd.
+
+          I2P (Invisible Internet Protocol) is a universal anonymous network layer.
+          All communications over I2P are anonymous and end-to-end encrypted,
+          participants don't reveal their real IP addresses.
+
+          %if "%{?vendor}" == "chum"
+          PackageName: I2Pd Settings UI
+          Type: desktop-application
+          PackagerName: nephros
+          Categories:
+           - Network
+           - P2P
+          Custom:
+            PackagingRepo: https://github.com/nephros/i2pd
+          Icon: https://i2pd.website/images/favicon.png
+          %endif
