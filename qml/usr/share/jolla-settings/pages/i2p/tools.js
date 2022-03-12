@@ -1,7 +1,7 @@
 var make_system_action = function(name) {
     return function() {
         var subprocess = require("subprocess");
-        subprocess.check_call("torbrowser.sh", [name]);
+        subprocess.check_call("/usr/share/i2pd-ui/bin/i2pbrowser.sh", [name]);
     };
 };
 

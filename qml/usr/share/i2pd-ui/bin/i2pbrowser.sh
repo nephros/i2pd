@@ -1,6 +1,7 @@
 #!/bin/bash
 
-USERPREF=/home/nemo/.mozilla/mozembed/prefs.js
+USERPREF=/home/nemo/.local/share/org.sailfishos/browser/.mozilla/user.js
+USERPREF=/home/nemo/.mozilla/mozembed/user.js
 
 function clear_prefs {
 	echo "Clearing proxy prefs"
@@ -15,7 +16,7 @@ case "$1" in
 		clear_prefs
 		echo "Enabling Tor proxy prefs"
 		echo 'user_pref("network.proxy.socks", "127.0.0.1");' >> "$USERPREF"
-		echo 'user_pref("network.proxy.socks_port", 9050);' >> "$USERPREF"
+		echo 'user_pref("network.proxy.socks_port", 4444);' >> "$USERPREF"
 		echo 'user_pref("network.proxy.type", 1);' >> "$USERPREF"
 		echo 'user_pref("network.proxy.socks_remote_dns", true);' >> "$USERPREF"
 		;;

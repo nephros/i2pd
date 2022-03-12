@@ -20,7 +20,7 @@ Page {
 
     ConfigurationGroup {
         id: proxyConf
-        path: "/apps/tor-button"
+        path: "/apps/i2p-button"
         property bool browserProxy: true
         property bool browserRestart: true
     }
@@ -38,7 +38,7 @@ Page {
         id: systemdServiceIface
         bus: DBus.SessionBus
         service: 'org.freedesktop.systemd1'
-        path: '/org/freedesktop/systemd1/unit/tor_2eservice'
+        path: '/org/freedesktop/systemd1/unit/i2pd'
         iface: 'org.freedesktop.systemd1.Unit'
 
         signalsEnabled: true
@@ -65,7 +65,7 @@ Page {
     DBusInterface {
         bus: DBus.SessionBus
         service: 'org.freedesktop.systemd1'
-        path: '/org/freedesktop/systemd1/unit/tor_2eservice'
+        path: '/org/freedesktop/systemd1/unit/i2pd'
         iface: 'org.freedesktop.DBus.Properties'
 
         signalsEnabled: true
@@ -82,7 +82,7 @@ Page {
 
         signal unitNew(string name)
         onUnitNew: {
-            if (name == "tor.service") {
+            if (name == "i2pd.service") {
                 systemdServiceIface.updateProperties()
             }
         }
@@ -97,7 +97,7 @@ Page {
             width: page.width
 
             PageHeader {
-                title: qsTr("Tor")
+                title: qsTr("I2P")
             }
 
             ListItem {
@@ -114,11 +114,11 @@ Page {
                 TextSwitch {
                     id: enableSwitch
 
-                    property string entryPath: "system_settings/security/tor/tor_active"
+                    property string entryPath: "system_settings/security/i2p/i2p_active"
 
                     automaticCheck: false
                     checked: activeState
-                    text: "Tor service state"
+                    text: "I2P service state"
                     //description: qsTrId("settings_flight-la-flight-mode-description")
 
                     onClicked: {
@@ -167,7 +167,7 @@ Page {
                 automaticCheck: false
                 checked: proxyConf.browserProxy
                 text: "Sailfish browser proxy"
-                description: "Automatically set proxy when enabling tor"
+                description: "Automatically set proxy when enabling I2P"
 
                 onClicked: {
                     proxyConf.browserProxy = !proxyConf.browserProxy

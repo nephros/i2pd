@@ -20,7 +20,7 @@ Switch {
 
     ConfigurationGroup {
         id: proxyConf
-        path: "/apps/tor-button"
+        path: "/apps/i2p-button"
         property bool browserProxy: true
         property bool browserRestart: true
     }
@@ -38,7 +38,7 @@ Switch {
         id: systemdServiceIface
         bus: DBus.SessionBus
         service: 'org.freedesktop.systemd1'
-        path: '/org/freedesktop/systemd1/unit/tor_2eservice'
+        path: '/org/freedesktop/systemd1/unit/i2pd'
         iface: 'org.freedesktop.systemd1.Unit'
 
         signalsEnabled: true
@@ -65,7 +65,7 @@ Switch {
     DBusInterface {
         bus: DBus.SessionBus
         service: 'org.freedesktop.systemd1'
-        path: '/org/freedesktop/systemd1/unit/tor_2eservice'
+        path: '/org/freedesktop/systemd1/unit/i2pd'
         iface: 'org.freedesktop.DBus.Properties'
 
         signalsEnabled: true
@@ -82,13 +82,13 @@ Switch {
 
         signal unitNew(string name)
         onUnitNew: {
-            if (name == "tor.service") {
+            if (name == "i2pd.service") {
                 systemdServiceIface.updateProperties()
             }
         }
     }
 
-    icon.source: "image://theme/icon-settings-tor"
+    icon.source: "image://theme/icon-settings-i2pd"
     checked: activeState == "active"
     automaticCheck: false
     onClicked: {
