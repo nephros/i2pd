@@ -1,3 +1,3 @@
 TEMPLATE = subdirs
-SUBDIRS =  i2pd-ui  jolla-settings
+SUBDIRS =  jolla-settings
 

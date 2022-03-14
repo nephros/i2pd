@@ -16,7 +16,7 @@
             "path": "system_settings/connectivity/i2p/i2p_active",
             "type": "custom",
             "translation_id": "settings_networking-i2p",
-            "icon": "image://theme/icon-m-i2p",
+            "icon": "image://theme/icon-settings-i2p_boxed",
             "params": {
                 "source": "/usr/share/jolla-settings/pages/i2p/EnableSwitch.qml",
                 "type": "grid",
