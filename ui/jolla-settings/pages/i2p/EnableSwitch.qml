@@ -1,9 +1,10 @@
 import QtQuick 2.1
 import Sailfish.Silica 1.0
-import org.nemomobile.dbus 2.0
-import org.nemomobile.configuration 1.0
+import Nemo.DBus 2.0
+import com.jolla.settings 1.0
+import org.nemomobile.systemsettings 1.0
 
-Switch {
+SettingsToggle {
     id: enableSwitch
 
     property string entryPath
@@ -78,7 +79,12 @@ Switch {
     icon.source: "image://theme/icon-m-i2pd"
     checked: activeState == "active"
     automaticCheck: false
-    onClicked: {
+    menu: ContextMenu {
+        SettingsMenuItem {
+            onClicked: goToSettings("system_settings/connectivity/vpn")
+        }
+    }
+    onToggled: {
         if (enableSwitch.busy) {
             return
         }
@@ -86,6 +92,4 @@ Switch {
         systemdServiceIface.updateProperties()
         enableSwitch.busy = true
     }
-
-    Behavior on opacity { FadeAnimation { } }
 }
