@@ -9,7 +9,8 @@
             "order": 351,
             "icon": "image://theme/icon-settings-i2p",
             "params": {
-                "source": "/usr/share/jolla-settings/pages/i2p/mainpage.qml"
+                "source": "/usr/share/jolla-settings/pages/i2p/mainpage.qml",
+                "privileged": "true"
             }
         },
         {
