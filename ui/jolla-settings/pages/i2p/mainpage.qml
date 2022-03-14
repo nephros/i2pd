@@ -117,7 +117,7 @@ Page {
                     automaticCheck: false
                     checked: activeState
                     text: "I2P Service" + " " + ( activeState ? "active" : "inactive" )
-                    //description: qsTrId("settings_flight-la-flight-mode-description")
+                    description: qsTr("Stopping may take some time.")
 
                     onClicked: {
                         if (enableSwitch.busy) {

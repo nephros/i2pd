@@ -25,7 +25,7 @@ Switch {
         id: systemdServiceIface
         bus: DBus.SystemBus
         service: 'org.freedesktop.systemd1'
-        path: '/org/freedesktop/systemd1/unit/i2pd'
+        path: '/org/freedesktop/systemd1/unit/i2pd_2eservice'
         iface: 'org.freedesktop.systemd1.Unit'
 
         signalsEnabled: true
@@ -75,7 +75,7 @@ Switch {
         }
     }
 
-    icon.source: "image://theme/icon-settings-i2p"
+    icon.source: "image://theme/icon-m-i2pd"
     checked: activeState == "active"
     automaticCheck: false
     onClicked: {
