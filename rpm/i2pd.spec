@@ -127,6 +127,7 @@ openssl req -new -key sailfishos.key -out sailfishos.csr -config %{SOURCE3}
 touch v3.ext
 openssl x509 -req -days 3650 -in sailfishos.csr -signkey sailfishos.key -out sailfishos.crt -extfile v3.ext
 popd
+
 # << build post
 
 %install
@@ -154,10 +155,9 @@ install -m 640 -D %{_builddir}/family-cert/sailfishos.key %{buildroot}%{custom_v
 install -m 640 -D %{_builddir}/family-cert/sailfishos.crt %{buildroot}%{custom_vardir}/%{name}/family/sailfishos.crt
 
 ## UI:
-pushd %{_builddir}/%{name}-%{version}/ui
-for f in $(find . -type f); do
-install -m 644 -D ${f} %{buildroot}/${f}
-done
+pushd %{_builddir}/%{name}-%{version}
+%qmake5
+%make_install
 popd
 
 # << install post
@@ -203,6 +203,6 @@ fi
 %{_datadir}/%{name}-ui/*
 %{_datadir}/jolla-settings/entries/i2pd.json
 %{_datadir}/jolla-settings/pages/i2p/*
-%{_datadir}/themes/jolla-ambient/meegotouch/icons/*
+%{_datadir}/themes/*/meegotouch/*/icons/*
 # >> files ui
 # << files ui

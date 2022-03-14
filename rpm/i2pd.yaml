@@ -55,6 +55,10 @@ Macros:
 #  - 'baz'
 Requires:
   - systemd
+PkgBR:
+  - sailfish-svg2png
+  - cmake
+  - qmake
 RequiresPost:
   - systemd
 RequiresPostUn:
@@ -111,7 +115,7 @@ SubPackages:
         - '%{_datadir}/%{name}-ui/*'
         - '%{_datadir}/jolla-settings/entries/i2pd.json'
         - '%{_datadir}/jolla-settings/pages/i2p/*'
-        - '%{_datadir}/themes/jolla-ambient/meegotouch/icons/*'
+        - '%{_datadir}/themes/*/meegotouch/*/icons/*'
       Description: |
           %{summary}.
 
