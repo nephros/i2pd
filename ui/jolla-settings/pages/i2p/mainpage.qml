@@ -35,10 +35,11 @@ Page {
     }
 
     DBusInterface {
+        // qdbus --system org.freedesktop.systemd1 /org/freedesktop/systemd1/unit/i2pd_2eservice org.freedesktop.systemd1.Unit.ActiveState
         id: systemdServiceIface
         bus: DBus.SystemBus
         service: 'org.freedesktop.systemd1'
-        path: '/org/freedesktop/systemd1/unit/i2pd'
+        path: '/org/freedesktop/systemd1/unit/i2pd_2eservice'
         iface: 'org.freedesktop.systemd1.Unit'
 
         signalsEnabled: true
@@ -65,7 +66,7 @@ Page {
     DBusInterface {
         bus: DBus.SystemBus
         service: 'org.freedesktop.systemd1'
-        path: '/org/freedesktop/systemd1/unit/i2pd'
+        path: '/org/freedesktop/systemd1/unit/i2pd_2eservice'
         iface: 'org.freedesktop.DBus.Properties'
 
         signalsEnabled: true
@@ -82,6 +83,7 @@ Page {
 
         signal unitNew(string name)
         onUnitNew: {
+            console.debug("New unit: " + name)
             if (name == "i2pd.service") {
                 systemdServiceIface.updateProperties()
             }
@@ -118,7 +120,7 @@ Page {
 
                     automaticCheck: false
                     checked: activeState
-                    text: "I2P service state"
+                    text: "I2P Service" + " " + ( activeState ? "active" : "inactive" )
                     //description: qsTrId("settings_flight-la-flight-mode-description")
 
                     onClicked: {
