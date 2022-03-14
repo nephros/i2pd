@@ -78,3 +78,8 @@ Also, at the moment, certificate and key are:
   - created at build time, i.e. will change with each package version
   - "widely" available because of this, and may be misused by bad actors
 
+## Credits and Thanks
+
+The UI/Settings component was argely copied from [Tor Settings Applet](https://openrepos.net/content/coderus/tor-settings-applet) by coderus.
+
+Icons originally from [Wikimedia](https://commons.wikimedia.org)
