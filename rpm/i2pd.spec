@@ -13,7 +13,7 @@ Summary:    End-to-End encrypted and anonymous Internet daemon
 Version:    2.41.0
 Release:    2
 Group:      Applications/Internet
-License:    BSD-3-Clause
+License:    BSD-3-Clause and Apache-2.0
 URL:        https://i2pd.website
 Source0:    %{name}-%{version}.tar.gz
 Source1:    %{name}.conf
@@ -32,6 +32,8 @@ BuildRequires:  cmake
 BuildRequires:  boost-devel >= 1.49
 BuildRequires:  systemd
 BuildRequires:  openssl
+BuildRequires:  qt5-qmake
+BuildRequires:  sailfish-svg2png
 
 %description
 %{summary}.
@@ -74,9 +76,11 @@ Url:
 
 %package ui
 Summary:    UI components for %{name}
+License:    Apache-2.0 and public domain
 Group:      Applications/Internet
 BuildArch:  noarch
 Requires:   %{name}
+Requires:   jolla-settings
 
 %description ui
 %{summary}.
@@ -157,7 +161,7 @@ install -m 640 -D %{_builddir}/family-cert/sailfishos.crt %{buildroot}%{custom_v
 ## UI:
 pushd %{_builddir}/%{name}-%{version}
 %qmake5
-%make_install
+%qmake5_install
 popd
 
 # << install post

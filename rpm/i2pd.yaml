@@ -3,7 +3,7 @@ Summary: End-to-End encrypted and anonymous Internet daemon
 Version: 2.41.0
 Release: 2
 Group: Applications/Internet
-License: BSD-3-Clause
+License: BSD-3-Clause and Apache-2.0
 URL: https://i2pd.website
 SCM: https://github.com/PurpleI2P/i2pd
 Sources:
@@ -55,10 +55,6 @@ Macros:
 #  - 'baz'
 Requires:
   - systemd
-PkgBR:
-  - sailfish-svg2png
-  - cmake
-  - qmake
 RequiresPost:
   - systemd
 RequiresPostUn:
@@ -68,23 +64,26 @@ PkgBR:
   - cmake
   - boost-devel >= 1.49
   - systemd
+  # for the "family" stuff, need openssl binary
   - openssl
+  # for the UI:
+  - qt5-qmake
+  - sailfish-svg2png
 PkgConfigBR:
   - libssl
   - zlib
 Configure: cmake
 ConfigOptions:
-  - '-DCMAKE_BUILD_TYPE=Release'
-  # '-DWITH_AESNI=%ifarch %ix86'
-  # '-DWITH_BINARY=ON'
-  # '-DWITH_LIBRARY=ON'
-  # '-DWITH_STATIC=OFF'
-  # '-DWITH_UPNP=OFF'
-  # '-DWITH_ADDRSANITIZER=ON'
-  # '-DWITH_THREADSANITIZER=ON'
+  - -DCMAKE_BUILD_TYPE=Release
+  # -DWITH_AESNI=%ifarch %ix86
+  # -DWITH_BINARY=ON
+  # -DWITH_LIBRARY=ON
+  # -DWITH_STATIC=OFF
+  # -DWITH_UPNP=OFF
+  # -DWITH_ADDRSANITIZER=ON
+  # -DWITH_THREADSANITIZER=ON
 Builder: none
 NoIconCache: true
-#BuildArch: noarch
 Files:
   - '%license LICENSE'
   - '%{_unitdir}/%{name}.service'
@@ -106,11 +105,13 @@ SubPackages:
     - Name:  ui
       Summary: UI components for %{name}
       Group: Applications/Internet
+      License: Apache-2.0 and public domain
       BuildArch: noarch
       NoIconCache: true
       AutoDepend: no
       Requires:
         - '%{name}'
+        - 'jolla-settings'
       Files:
         - '%{_datadir}/%{name}-ui/*'
         - '%{_datadir}/jolla-settings/entries/i2pd.json'
