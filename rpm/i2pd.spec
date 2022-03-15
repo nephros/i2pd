@@ -8,12 +8,15 @@ Name:       i2pd
 # >> macros
 # << macros
 %define custom_vardir /home/.system/%{_var}/lib
+%define with_daemon 0
+%define with_family 0
+%define with_ui 1
 
 Summary:    End-to-End encrypted and anonymous Internet daemon
 Version:    2.41.0
 Release:    2
 Group:      Applications/Internet
-License:    BSD-3-Clause and Apache-2.0
+License:    BSD-3-Clause
 URL:        https://i2pd.website
 Source0:    %{name}-%{version}.tar.gz
 Source1:    %{name}.conf
@@ -76,7 +79,7 @@ Url:
 
 %package ui
 Summary:    UI components for %{name}
-License:    Apache-2.0 and public domain
+License:    ASL 2.0 and Public Domain
 Group:      Applications/Internet
 BuildArch:  noarch
 Requires:   %{name}
@@ -108,10 +111,23 @@ Icon: https://i2pd.website/images/favicon.png
 %setup -q -n %{name}-%{version}/upstream
 
 # >> setup
+echo "rpm with macros:"
+%if %{with_daemon}
+echo "Building WITH daemon"
+%else
+echo "Building WITHOUT daemon"
+%endif
+%if %{with_family}
+echo "Family certificate: ENABLED"
+%endif
+%if %{with_ui}
+echo "UI components: ENABLED"
+%endif
 # << setup
 
 %build
 # >> build pre
+%if %{with_daemon}
 pushd build
 # << build pre
 
@@ -121,9 +137,11 @@ pushd build
 
 # >> build post
 %make_build %{?_smp_mflags}
+%endif
 
 # generate familty certificate files:
 # TODO: build-time is probably not the brightest way to do that...
+%if %{with_family}
 mkdir -p %{_builddir}/family-cert
 pushd %{_builddir}/family-cert
 openssl ecparam -name prime256v1 -genkey -out sailfishos.key
@@ -131,18 +149,21 @@ openssl req -new -key sailfishos.key -out sailfishos.csr -config %{SOURCE3}
 touch v3.ext
 openssl x509 -req -days 3650 -in sailfishos.csr -signkey sailfishos.key -out sailfishos.crt -extfile v3.ext
 popd
-
+%endif
 # << build post
 
 %install
 rm -rf %{buildroot}
 # >> install pre
+%if %{with_daemon}
 pushd build
 %make_install
 popd
+%endif
 # << install pre
 
 # >> install post
+%if %{with_daemon}
 install -m 644 -D %{SOURCE1}      %{buildroot}%{custom_vardir}/%{name}/%{name}.conf
 install -m 644 -D %{SOURCE2}      %{buildroot}%{_unitdir}/%{name}.service
 pushd contrib
@@ -155,14 +176,19 @@ for f in certificates/family/*  certificates/reseed/* ; do
 install -m 644 -D ${f}    %{buildroot}%{custom_vardir}/%{name}/${f}
 done
 popd
+%endif
+%if %{with_family}
 install -m 640 -D %{_builddir}/family-cert/sailfishos.key %{buildroot}%{custom_vardir}/%{name}/family/sailfishos.key
 install -m 640 -D %{_builddir}/family-cert/sailfishos.crt %{buildroot}%{custom_vardir}/%{name}/family/sailfishos.crt
+%endif
 
 ## UI:
+%if %{with_ui}
 pushd %{_builddir}/%{name}-%{version}
 %qmake5
 %qmake5_install
 popd
+%endif
 
 # << install post
 
@@ -186,6 +212,8 @@ fi
 
 %files
 %defattr(-,root,root,-)
+# >> files
+%if %{with_daemon}
 %license LICENSE
 %{_unitdir}/%{name}.service
 %{_bindir}/%{name}
@@ -194,19 +222,27 @@ fi
 %attr(770,root,inet) %dir %{custom_vardir}/%{name}/tunnels.d
 %attr(775,root,inet) %dir %{custom_vardir}/%{name}/addressbook
 %{custom_vardir}/%{name}/certificates/*/*
-%attr(640,root,inet) %config %{custom_vardir}/%{name}/family/sailfishos.crt
-%attr(640,root,inet) %config %{custom_vardir}/%{name}/family/sailfishos.key
 %attr(640,root,inet) %config(noreplace) %{custom_vardir}/%{name}/%{name}.conf
 %config(noreplace) %{custom_vardir}/%{name}/%{name}.conf.example
 %config(noreplace) %{custom_vardir}/%{name}/tunnels.conf.example
-# >> files
+
+%if %{with_family}
+%attr(640,root,inet) %config %{custom_vardir}/%{name}/family/sailfishos.crt
+%attr(640,root,inet) %config %{custom_vardir}/%{name}/family/sailfishos.key
+%endif
+%endif
+
+# !!! this removes the following files section so we do not get an empty rpm:
+%if %{with_ui}
 # << files
 
 %files ui
 %defattr(-,root,root,-)
+# >> files ui
 %{_datadir}/jolla-settings/entries/i2pd.json
 %{_datadir}/jolla-settings/pages/i2p/*
+%{_datadir}/themes/*/meegotouch/icons/*
 %{_datadir}/themes/*/meegotouch/*/icons/*
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
-# >> files ui
+%endif
 # << files ui

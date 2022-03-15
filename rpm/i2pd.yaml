@@ -3,7 +3,7 @@ Summary: End-to-End encrypted and anonymous Internet daemon
 Version: 2.41.0
 Release: 2
 Group: Applications/Internet
-License: BSD-3-Clause and Apache-2.0
+License: BSD-3-Clause
 URL: https://i2pd.website
 SCM: https://github.com/PurpleI2P/i2pd
 Sources:
@@ -51,6 +51,9 @@ Description: |
 SetupOptions: -q -n %{name}-%{version}/upstream
 Macros:
   - 'custom_vardir;/home/.system/%{_var}/lib'
+  - 'with_daemon;0'
+  - 'with_family;0'
+  - 'with_ui;1'
 #Patches:
 #  - 'baz'
 Requires:
@@ -84,39 +87,18 @@ ConfigOptions:
   # -DWITH_THREADSANITIZER=ON
 Builder: none
 NoIconCache: true
-Files:
-  - '%license LICENSE'
-  - '%{_unitdir}/%{name}.service'
-  - '%{_bindir}/%{name}'
-  - '%{_libdir}/*.so'
-  - '%attr(775,root,inet) %dir %{custom_vardir}/%{name}'
-  - '%attr(770,root,inet) %dir %{custom_vardir}/%{name}/tunnels.d'
-  - '%attr(775,root,inet) %dir %{custom_vardir}/%{name}/addressbook'
-  - '%{custom_vardir}/%{name}/certificates/*/*'
-  - '%attr(640,root,inet) %config %{custom_vardir}/%{name}/family/sailfishos.crt'
-  - '%attr(640,root,inet) %config %{custom_vardir}/%{name}/family/sailfishos.key'
-  - '%attr(640,root,inet) %config(noreplace) %{custom_vardir}/%{name}/%{name}.conf'
-  - '%config(noreplace) %{custom_vardir}/%{name}/%{name}.conf.example'
-  - '%config(noreplace) %{custom_vardir}/%{name}/tunnels.conf.example'
-
-
 
 SubPackages:
     - Name:  ui
       Summary: UI components for %{name}
       Group: Applications/Internet
-      License: Apache-2.0 and public domain
+      License: ASL 2.0 and Public Domain
       BuildArch: noarch
       NoIconCache: true
       AutoDepend: no
       Requires:
         - '%{name}'
         - 'jolla-settings'
-      Files:
-        - '%{_datadir}/jolla-settings/entries/i2pd.json'
-        - '%{_datadir}/jolla-settings/pages/i2p/*'
-        - '%{_datadir}/themes/*/meegotouch/*/icons/*'
-        - '%{_datadir}/icons/hicolor/scalable/apps/*.svg'
       Description: |
           %{summary}.
 
