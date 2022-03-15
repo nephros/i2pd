@@ -76,6 +76,17 @@ Page {
         }
     }
 
+   Component { id: banner
+   Image {
+       anchors.horizontalCenter: parent.horizontalCenter
+       height: parent.height
+       sourceSize.height: height
+       smooth: false
+       fillMode: Image.PreserveAspectFit
+       source: "image://theme/i2p-banner-dots"
+   }
+   }
+
     SilicaFlickable {
         anchors.fill: parent
         contentHeight: column.height
@@ -86,16 +97,7 @@ Page {
 
             PageHeader {
                 title: qsTr("I2P")
-            }
-
-            Image {
-                id: banner
-                anchors.horizontalCenter: parent.horizontalCenter
-                width: enableItem.width
-                sourceSize.width: width
-                smooth: false
-                fillMode: Image.PreserveAspectFit
-                source: "image://theme/i2p-banner"
+                extraContent: banner
             }
 
             ListItem {
