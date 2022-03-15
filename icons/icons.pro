@@ -7,7 +7,5 @@ INSTALLS += svg
 # also install SVG:
 svg.path = /usr/share/icons/hicolor/scalable/apps
 svg.files = \
-    svgs/icon-settings-i2p.svg \
-    svgs/i2p-banner.svg \
-    svgs/i2p-banner-dots.svg \
-    svgs/icon-lockscreen-i2p.svg
+    svgs/icon-m-i2p.svg \
+    svgs/i2p-banner-dots.svg

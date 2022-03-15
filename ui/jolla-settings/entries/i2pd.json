@@ -7,7 +7,7 @@
             "title": "I2P",
             "translation_id": "settings_networking-i2p",
             "order": 351,
-            "icon": "image://theme/icon-settings-i2p",
+            "icon": "image://theme/icon-m-i2p",
             "params": {
                 "source": "/usr/share/jolla-settings/pages/i2p/mainpage.qml",
                 "privileged": "true"
@@ -16,7 +16,7 @@
         {
             "path": "system_settings/connectivity/i2p/enable_switch",
             "type": "custom",
-            "icon": "image://theme/icon-settings-i2p",
+            "icon": "image://theme/icon-m-i2p",
             "params": {
                 "source": "/usr/share/jolla-settings/pages/i2p/EnableSwitch.qml",
                 "type": "grid",
