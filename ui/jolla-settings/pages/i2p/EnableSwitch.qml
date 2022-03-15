@@ -2,6 +2,7 @@
  * Copyright (c) 2022 Peter G. <sailfish@nephros.org>
  *
  * License: Apache-2.0
+ *
  */
 
 import QtQuick 2.1
@@ -13,17 +14,15 @@ import org.nemomobile.systemsettings 1.0
 SettingsToggle {
     id: enableSwitch
 
-    property string entryPath
     property bool activeState
 
     onActiveStateChanged: {
         enableSwitch.busy = false
     }
 
-	//
-	name: "I2P"
-	activeText: "active"
-    icon.source: "image://theme/icon-settings-i2p"
+    name: "I2P"
+    activeText: "active"
+    icon.source: "image://theme/icon-m-i2p"
 
     //active:
     checked: activeState
@@ -33,7 +32,7 @@ SettingsToggle {
 
     menu: ContextMenu {
         SettingsMenuItem {
-            onClicked: goToSettings("system_settings/connectivity/vpn")
+            onClicked: enableSwitch.goToSettings()
         }
 
         MenuItem {

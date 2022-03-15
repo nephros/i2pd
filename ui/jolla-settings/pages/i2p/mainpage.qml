@@ -112,8 +112,6 @@ Page {
                 TextSwitch {
                     id: enableSwitch
 
-                    property string entryPath: "system_settings/security/i2p/i2p_active"
-
                     automaticCheck: false
                     checked: activeState
                     text: "I2P Service" + " " + ( activeState ? "active" : "inactive" )
@@ -127,7 +125,6 @@ Page {
                         systemdServiceIface.updateProperties()
                         enableSwitch.busy = true
                     }
-                    onPressAndHold: enableItem.showMenu({ settingEntryPath: entryPath, isFavorite: favorites.isFavorite(entryPath) })
                 }
             }
         }

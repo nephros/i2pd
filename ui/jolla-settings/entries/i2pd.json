@@ -5,7 +5,7 @@
             "path": "system_settings/connectivity/i2p",
             "type": "page",
             "title": "I2P",
-            "translation_id": "settings_system-i2p",
+            "translation_id": "settings_networking-i2p",
             "order": 351,
             "icon": "image://theme/icon-settings-i2p",
             "params": {
@@ -14,7 +14,7 @@
             }
         },
         {
-            "path": "system_settings/connectivity/i2p/i2p_active",
+            "path": "system_settings/connectivity/i2p/enable_switch",
             "type": "custom",
             "icon": "image://theme/icon-settings-i2p",
             "params": {
