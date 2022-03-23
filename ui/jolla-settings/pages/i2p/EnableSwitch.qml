@@ -17,18 +17,17 @@ SettingsToggle {
     property bool activeState
 
     onActiveStateChanged: {
-        enableSwitch.busy = false
+        busy = false
     }
 
     name: "I2P"
     activeText: "active"
     icon.source: "image://theme/icon-m-i2p"
 
-    //active:
+    active: activeState
     checked: activeState
 
     //busy:
-
 
     menu: ContextMenu {
         SettingsMenuItem {
@@ -42,15 +41,14 @@ SettingsToggle {
     }
 
     onToggled: {
-        if (enableSwitch.busy) {
+        if (busy) {
             return
         }
+        busy = true
         systemdServiceIface.call(activeState ? "Stop" : "Start", ["replace"])
         systemdServiceIface.updateProperties()
-        enableSwitch.busy = true
     }
 
-    Component.onCompleted: systemdServiceIface.updateProperties()
 
     Timer {
         id: checkState
@@ -114,5 +112,7 @@ SettingsToggle {
             }
         }
     }
+
+    Component.onCompleted: systemdServiceIface.updateProperties()
 
 }
