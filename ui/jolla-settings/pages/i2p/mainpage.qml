@@ -113,7 +113,7 @@ Page {
                     width: parent.width - Theme.horizontalPageMargin
                     anchors.horizontalCenter: parent.horizontalCenter
                     wrapMode: Text.WordWrap
-                    text: "Specify the API credentials. If changed, they will be used in this session, but not stored."
+                    text: "Specify the Web Console credentials. They are used to show the information on the previous page. If changed, they will be used in this session, but not stored."
                 }
                 TextField {
                     id: userField
