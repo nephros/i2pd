@@ -8,8 +8,8 @@ Name:       i2pd
 # >> macros
 # << macros
 %define custom_vardir /home/.system/%{_var}/lib
-%define with_daemon 0
-%define with_family 0
+%define with_daemon 1
+%define with_family 1
 %define with_ui 1
 
 Summary:    End-to-End encrypted and anonymous Internet daemon
@@ -57,7 +57,7 @@ Notices for SailfishOS:
   - the config lives in `/home/.system/var/lib/i2pd`, not `/etc`
   - the web console is reachable at http://127.0.0.1:7070
   - join the 'sailfishos' family!
-  - for more information, se the README at https://github.com/nephros/i2pd/blob/main/README.md
+  - for more information, see the README at https://github.com/nephros/i2pd/blob/main/README.md
 
 %if "%{?vendor}" == "chum"
 PackageName: I2Pd
@@ -86,9 +86,7 @@ Requires:   %{name}
 Requires:   jolla-settings
 
 %description ui
-%{summary}.
-
-This package is the companion/settings app for I2Pd.
+Settings integration/UI for I2Pd.
 
 I2P (Invisible Internet Protocol) is a universal anonymous network layer.
 All communications over I2P are anonymous and end-to-end encrypted,

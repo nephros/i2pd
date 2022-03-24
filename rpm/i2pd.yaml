@@ -30,7 +30,7 @@ Description: |
       - the config lives in `/home/.system/var/lib/i2pd`, not `/etc`
       - the web console is reachable at http://127.0.0.1:7070
       - join the 'sailfishos' family!
-      - for more information, se the README at https://github.com/nephros/i2pd/blob/main/README.md
+      - for more information, see the README at https://github.com/nephros/i2pd/blob/main/README.md
 
     %if "%{?vendor}" == "chum"
     PackageName: I2Pd
@@ -51,8 +51,8 @@ Description: |
 SetupOptions: -q -n %{name}-%{version}/upstream
 Macros:
   - 'custom_vardir;/home/.system/%{_var}/lib'
-  - 'with_daemon;0'
-  - 'with_family;0'
+  - 'with_daemon;1'
+  - 'with_family;1'
   - 'with_ui;1'
 #Patches:
 #  - 'baz'
@@ -100,9 +100,7 @@ SubPackages:
         - '%{name}'
         - 'jolla-settings'
       Description: |
-          %{summary}.
-
-          This package is the companion/settings app for I2Pd.
+          Settings integration/UI for I2Pd.
 
           I2P (Invisible Internet Protocol) is a universal anonymous network layer.
           All communications over I2P are anonymous and end-to-end encrypted,
