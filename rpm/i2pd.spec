@@ -53,11 +53,12 @@ applications (websites, instant messengers, chat-servers).
 I2P allows people from all around the world to communicate and share
 information without restrictions.
 
-Notices for SailfishOS:
-  - the config lives in `/home/.system/var/lib/i2pd`, not `/etc`
-  - the web console is reachable at http://127.0.0.1:7070
-  - join the 'sailfishos' family!
-  - for more information, see the README at https://github.com/nephros/i2pd/blob/main/README.md
+Notices for SailfishOS:  
+  the config lives in `/home/.system/var/lib/i2pd`, not `/etc`  
+  the web console is reachable at http://127.0.0.1:7070  
+  join the 'sailfishos' family!  
+
+  For more information, see the README at https://github.com/nephros/i2pd/blob/master/README.md
 
 %if "%{?vendor}" == "chum"
 PackageName: I2Pd
@@ -86,7 +87,14 @@ Requires:   %{name}
 Requires:   jolla-settings
 
 %description ui
-Settings integration/UI for I2Pd.
+Settings UI integration for I2Pd.
+
+Adds a Settings entry and a TopMenu switch to start/stop the demon
+and show some state information.
+Installing this will install the daemon as well.
+
+For more information, see description of the daemon package and the
+README at https://github.com/nephros/i2pd/blob/master/README.md
 
 I2P (Invisible Internet Protocol) is a universal anonymous network layer.
 All communications over I2P are anonymous and end-to-end encrypted,
@@ -100,8 +108,10 @@ Categories:
  - Network
  - P2P
 Custom:
-  PackagingRepo: https://github.com/nephros/i2pd
+  Repo: https://github.com/nephros/i2pd
 Icon: https://i2pd.website/images/favicon.png
+Screenshots:
+  - https://raw.githubusercontent.com/nephros/i2pd/master/Screenshot_001.png
 %endif
 
 
