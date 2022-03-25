@@ -221,8 +221,8 @@ fi
 %attr(775,root,inet) %dir %{custom_vardir}/%{name}/addressbook
 %{custom_vardir}/%{name}/certificates/*/*
 %attr(640,root,inet) %config(noreplace) %{custom_vardir}/%{name}/%{name}.conf
-%config(noreplace) %{custom_vardir}/%{name}/%{name}.conf.example
-%config(noreplace) %{custom_vardir}/%{name}/tunnels.conf.example
+%config %{custom_vardir}/%{name}/%{name}.conf.example
+%config %{custom_vardir}/%{name}/tunnels.conf.example
 
 %if %{with_family}
 %attr(640,root,inet) %config %{custom_vardir}/%{name}/family/sailfishos.crt
