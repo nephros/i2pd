@@ -16,24 +16,15 @@ SettingsToggle {
 
     property bool activeState
 
-    onActiveStateChanged: {
-        busy = false
-    }
-
     name: "I2P"
-    activeText: "active"
+    activeText: "I2P"
     icon.source: "image://theme/icon-m-i2p"
 
     active: activeState
     checked: activeState
 
-    //busy:
-
     menu: ContextMenu {
-        SettingsMenuItem {
-            onClicked: enableSwitch.goToSettings()
-        }
-
+        SettingsMenuItem { onClicked: enableSwitch.goToSettings() }
         MenuItem {
             text: "Open Web Console"
             onClicked: Qt.openUrlExternally("http://127.0.0.1:7070")
@@ -49,10 +40,9 @@ SettingsToggle {
         systemdServiceIface.updateProperties()
     }
 
-
     Timer {
         id: checkState
-        interval: 1000
+        interval: 2000
         repeat: true
         onTriggered: {
             systemdServiceIface.updateProperties()
@@ -74,11 +64,12 @@ SettingsToggle {
                 activeState = true
                 checkState.stop()
             }
-            else if (activeProperty === "inactive") {
+            else if (activeProperty === "inactive" || activeProperty === "failed")  {
                 activeState = false
                 checkState.stop()
             }
             else {
+                enableSwitch.busy = false
                 checkState.start()
             }
         }
@@ -98,6 +89,7 @@ SettingsToggle {
         Component.onCompleted: systemdServiceIface.updateProperties()
     }
 
+    /*
     DBusInterface {
         bus: DBus.SystemBus
         service: "org.freedesktop.systemd1"
@@ -112,6 +104,7 @@ SettingsToggle {
             }
         }
     }
+    */
 
     Component.onCompleted: systemdServiceIface.updateProperties()
 
