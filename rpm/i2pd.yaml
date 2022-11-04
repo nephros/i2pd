@@ -65,7 +65,6 @@ RequiresPostUn:
   - systemd
 PkgBR:
   - gcc-c++
-  - cmake
   - boost-devel >= 1.49
   - systemd
   # for the "family" stuff, need openssl binary
@@ -76,7 +75,7 @@ PkgBR:
 PkgConfigBR:
   - libssl
   - zlib
-Configure: cmake
+Builder: cmake
 ConfigOptions:
   - -DCMAKE_BUILD_TYPE=Release
   # -DWITH_AESNI=%ifarch %ix86
@@ -86,7 +85,6 @@ ConfigOptions:
   # -DWITH_UPNP=OFF
   # -DWITH_ADDRSANITIZER=ON
   # -DWITH_THREADSANITIZER=ON
-Builder: none
 NoIconCache: true
 
 SubPackages:

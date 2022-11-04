@@ -31,12 +31,12 @@ Requires(postun): /sbin/ldconfig
 BuildRequires:  pkgconfig(libssl)
 BuildRequires:  pkgconfig(zlib)
 BuildRequires:  gcc-c++
-BuildRequires:  cmake
 BuildRequires:  boost-devel >= 1.49
 BuildRequires:  systemd
 BuildRequires:  openssl
 BuildRequires:  qt5-qmake
 BuildRequires:  sailfish-svg2png
+BuildRequires:  cmake
 
 %description
 %{summary}.
@@ -142,9 +142,9 @@ pushd build
 %cmake .  \
     -DCMAKE_BUILD_TYPE=Release
 
+make %{?_smp_mflags}
 
 # >> build post
-%make_build %{?_smp_mflags}
 %endif
 
 # generate familty certificate files:
@@ -169,6 +169,7 @@ pushd build
 popd
 %endif
 # << install pre
+%make_install
 
 # >> install post
 %if %{with_daemon}
