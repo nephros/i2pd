@@ -140,7 +140,8 @@ pushd build
 # << build pre
 
 %cmake .  \
-    -DCMAKE_BUILD_TYPE=Release
+    -DCMAKE_BUILD_TYPE=Release \
+    -DCMAKE_INSTALL_BINDIR=%{_bindir}
 
 make %{?_smp_mflags}
 

@@ -78,6 +78,7 @@ PkgConfigBR:
 Builder: cmake
 ConfigOptions:
   - -DCMAKE_BUILD_TYPE=Release
+  - -DCMAKE_INSTALL_BINDIR=%{_bindir}
   # -DWITH_AESNI=%ifarch %ix86
   # -DWITH_BINARY=ON
   # -DWITH_LIBRARY=ON
