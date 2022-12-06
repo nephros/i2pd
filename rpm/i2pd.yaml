@@ -64,6 +64,7 @@ RequiresPost:
 RequiresPostUn:
   - systemd
 PkgBR:
+  - cmake
   - gcc-c++
   - boost-devel >= 1.49
   - systemd
@@ -76,10 +77,10 @@ PkgConfigBR:
   - libssl
   - zlib
   - atomic_ops
-Builder: cmake
+Configure: cmake
+Builder: none
 ConfigOptions:
   - -DCMAKE_BUILD_TYPE=Release
-  - -DCMAKE_INSTALL_BINDIR=%{_bindir}
   # -DWITH_AESNI=%ifarch %ix86
   # -DWITH_BINARY=ON
   # -DWITH_LIBRARY=ON
