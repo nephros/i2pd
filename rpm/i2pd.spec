@@ -30,6 +30,7 @@ Requires(postun): systemd
 Requires(postun): /sbin/ldconfig
 BuildRequires:  pkgconfig(libssl)
 BuildRequires:  pkgconfig(zlib)
+BuildRequires:  pkgconfig(atomic_ops)
 BuildRequires:  gcc-c++
 BuildRequires:  boost-devel >= 1.49
 BuildRequires:  systemd

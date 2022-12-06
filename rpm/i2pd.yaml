@@ -75,6 +75,7 @@ PkgBR:
 PkgConfigBR:
   - libssl
   - zlib
+  - atomic_ops
 Builder: cmake
 ConfigOptions:
   - -DCMAKE_BUILD_TYPE=Release
