@@ -13,7 +13,7 @@ Name:       i2pd
 %define with_ui 1
 
 Summary:    End-to-End encrypted and anonymous Internet daemon
-Version:    2.44.0
+Version:    2.45.1
 Release:    1
 Group:      Applications/Internet
 License:    BSD-3-Clause
