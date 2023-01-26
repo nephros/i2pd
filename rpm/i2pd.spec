@@ -8,13 +8,13 @@ Name:       i2pd
 # >> macros
 # << macros
 %define custom_vardir /home/.system/%{_var}/lib
-%define with_daemon 0
-%define with_family 0
+%define with_daemon 1
+%define with_family 1
 %define with_ui 1
 
 Summary:    End-to-End encrypted and anonymous Internet daemon
-Version:    2.41.0
-Release:    3
+Version:    2.43.0
+Release:    1
 Group:      Applications/Internet
 License:    BSD-3-Clause
 URL:        https://i2pd.website
@@ -53,11 +53,12 @@ applications (websites, instant messengers, chat-servers).
 I2P allows people from all around the world to communicate and share
 information without restrictions.
 
-Notices for SailfishOS:
-  - the config lives in `/home/.system/var/lib/i2pd`, not `/etc`
-  - the web console is reachable at http://127.0.0.1:7070
-  - join the 'sailfishos' family!
-  - for more information, se the README at https://github.com/nephros/i2pd/blob/main/README.md
+Notices for SailfishOS:  
+  the config lives in `/home/.system/var/lib/i2pd`, not `/etc`  
+  the web console is reachable at http://127.0.0.1:7070  
+  join the 'sailfishos' family!  
+
+  For more information, see the README at https://github.com/nephros/i2pd/blob/master/README.md
 
 %if "%{?vendor}" == "chum"
 PackageName: I2Pd
@@ -86,9 +87,14 @@ Requires:   %{name}
 Requires:   jolla-settings
 
 %description ui
-%{summary}.
+Settings UI integration for I2Pd.
 
-This package is the companion/settings app for I2Pd.
+Adds a Settings entry and a TopMenu switch to start/stop the demon
+and show some state information.
+Installing this will install the daemon as well.
+
+For more information, see description of the daemon package and the
+README at https://github.com/nephros/i2pd/blob/master/README.md
 
 I2P (Invisible Internet Protocol) is a universal anonymous network layer.
 All communications over I2P are anonymous and end-to-end encrypted,
@@ -102,8 +108,10 @@ Categories:
  - Network
  - P2P
 Custom:
-  PackagingRepo: https://github.com/nephros/i2pd
+  Repo: https://github.com/nephros/i2pd
 Icon: https://i2pd.website/images/favicon.png
+Screenshots:
+  - https://raw.githubusercontent.com/nephros/i2pd/master/Screenshot_001.png
 %endif
 
 
@@ -223,8 +231,8 @@ fi
 %attr(775,root,inet) %dir %{custom_vardir}/%{name}/addressbook
 %{custom_vardir}/%{name}/certificates/*/*
 %attr(640,root,inet) %config(noreplace) %{custom_vardir}/%{name}/%{name}.conf
-%config(noreplace) %{custom_vardir}/%{name}/%{name}.conf.example
-%config(noreplace) %{custom_vardir}/%{name}/tunnels.conf.example
+%config %{custom_vardir}/%{name}/%{name}.conf.example
+%config %{custom_vardir}/%{name}/tunnels.conf.example
 
 %if %{with_family}
 %attr(640,root,inet) %config %{custom_vardir}/%{name}/family/sailfishos.crt
