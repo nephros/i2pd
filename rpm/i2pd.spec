@@ -13,7 +13,7 @@ Name:       i2pd
 %define with_ui 1
 
 Summary:    End-to-End encrypted and anonymous Internet daemon
-Version:    2.43.0
+Version:    2.45.1
 Release:    1
 Group:      Applications/Internet
 License:    BSD-3-Clause
@@ -30,8 +30,9 @@ Requires(postun): systemd
 Requires(postun): /sbin/ldconfig
 BuildRequires:  pkgconfig(libssl)
 BuildRequires:  pkgconfig(zlib)
-BuildRequires:  gcc-c++
+BuildRequires:  pkgconfig(atomic_ops)
 BuildRequires:  cmake
+BuildRequires:  gcc-c++
 BuildRequires:  boost-devel >= 1.49
 BuildRequires:  systemd
 BuildRequires:  openssl
@@ -144,7 +145,7 @@ pushd build
 
 
 # >> build post
-%make_build %{?_smp_mflags}
+popd
 %endif
 
 # generate familty certificate files:

@@ -1,6 +1,6 @@
 Name: i2pd
 Summary: End-to-End encrypted and anonymous Internet daemon
-Version: 2.43.0
+Version: 2.45.1
 Release: 1
 Group: Applications/Internet
 License: BSD-3-Clause
@@ -64,8 +64,8 @@ RequiresPost:
 RequiresPostUn:
   - systemd
 PkgBR:
-  - gcc-c++
   - cmake
+  - gcc-c++
   - boost-devel >= 1.49
   - systemd
   # for the "family" stuff, need openssl binary
@@ -76,7 +76,9 @@ PkgBR:
 PkgConfigBR:
   - libssl
   - zlib
+  - atomic_ops
 Configure: cmake
+Builder: none
 ConfigOptions:
   - -DCMAKE_BUILD_TYPE=Release
   # -DWITH_AESNI=%ifarch %ix86
@@ -86,7 +88,6 @@ ConfigOptions:
   # -DWITH_UPNP=OFF
   # -DWITH_ADDRSANITIZER=ON
   # -DWITH_THREADSANITIZER=ON
-Builder: none
 NoIconCache: true
 
 SubPackages:
