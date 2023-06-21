@@ -1,9 +1,6 @@
-/*
- * Copyright (c) 2022 Peter G. <sailfish@nephros.org>
- *
- * License: Apache-2.0
- *
- */
+// SPDX-FileCopyrightText: 2022 Peter G. <sailfish@nephros.org>
+//
+// SPDX-License-Identifier: Apache-2.0
 
 import QtQuick 2.1
 import Sailfish.Silica 1.0
@@ -14,14 +11,19 @@ import org.nemomobile.systemsettings 1.0
 SettingsToggle {
     id: enableSwitch
 
-    property bool activeState
+    property alias serviceState: unit.activeState
+    property bool activeState:   serviceState === "active"
+    property bool inactiveState: !activeState && ((serviceState !== "inactive") && (serviceState !== "failed"))
+    property bool busyState:     !activeState && ((serviceState !== "reloading") && (serviceState !== "activating") && (serviceState !== "deactivating"))
+
+    active: activeState
+    checked: activeState
+    busy: busyState
+    enabled: !busy
 
     name: "I2P"
     activeText: "I2P"
     icon.source: "image://theme/icon-m-i2p"
-
-    active: activeState
-    checked: activeState
 
     menu: ContextMenu {
         SettingsMenuItem { onClicked: enableSwitch.goToSettings() }
@@ -31,81 +33,20 @@ SettingsToggle {
         }
     }
 
-    onToggled: {
-        if (busy) {
-            return
-        }
-        busy = true
-        systemdServiceIface.call(activeState ? "Stop" : "Start", ["replace"])
-        systemdServiceIface.updateProperties()
-    }
-
-    Timer {
-        id: checkState
-        interval: 2000
-        repeat: true
-        onTriggered: {
-            systemdServiceIface.updateProperties()
-        }
-    }
+    onToggled: unit.call(activeState ? "Stop" : "Start", ["replace"])
 
     DBusInterface {
-        id: systemdServiceIface
+        id: unit
         bus: DBus.SystemBus
         service: 'org.freedesktop.systemd1'
         path: '/org/freedesktop/systemd1/unit/i2pd_2eservice'
         iface: 'org.freedesktop.systemd1.Unit'
 
-        signalsEnabled: true
-        function updateProperties() {
-            var activeProperty = systemdServiceIface.getProperty("ActiveState")
-            console.log("ActiveState:", activeProperty)
-            if (activeProperty === "active") {
-                activeState = true
-                checkState.stop()
-            }
-            else if (activeProperty === "inactive" || activeProperty === "failed")  {
-                activeState = false
-                checkState.stop()
-            }
-            else {
-                enableSwitch.busy = false
-                checkState.start()
-            }
-        }
-
-        onPropertiesChanged: updateProperties()
-        Component.onCompleted: updateProperties()
-    }
-
-    DBusInterface {
-        bus: DBus.SystemBus
-        service: 'org.freedesktop.systemd1'
-        path: '/org/freedesktop/systemd1/unit/i2pd'
-        iface: 'org.freedesktop.DBus.Properties'
+        property string activeState
+        //property string subState
+        //property string unitFileState
 
         signalsEnabled: true
-        onPropertiesChanged: systemdServiceIface.updateProperties()
-        Component.onCompleted: systemdServiceIface.updateProperties()
+        propertiesEnabled: true
     }
-
-    /*
-    DBusInterface {
-        bus: DBus.SystemBus
-        service: "org.freedesktop.systemd1"
-        path: "/org/freedesktop/systemd1"
-        iface: "org.freedesktop.systemd1.Manager"
-        signalsEnabled: true
-
-        signal unitNew(string name)
-        onUnitNew: {
-            if (name == "i2pd.service") {
-                systemdServiceIface.updateProperties()
-            }
-        }
-    }
-    */
-
-    Component.onCompleted: systemdServiceIface.updateProperties()
-
 }

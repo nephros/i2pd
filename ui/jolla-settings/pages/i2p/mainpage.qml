@@ -1,3 +1,7 @@
+// SPDX-FileCopyrightText: 2022 Peter G. <sailfish@nephros.org>
+//
+// SPDX-License-Identifier: Apache-2.0
+
 import QtQuick 2.1
 import Sailfish.Silica 1.0
 import com.jolla.settings 1.0
@@ -7,20 +11,16 @@ import org.nemomobile.configuration 1.0
 Page {
     id: page
 
-    property bool activeState
-    //property bool enabledState
+    property alias serviceState: unit.activeState
+    property bool activeState:   serviceState === "active"
+    property bool inactiveState: !activeState && ((serviceState !== "inactive") && (serviceState !== "failed"))
+    property bool busyState:     !activeState && ((serviceState !== "reloading") && (serviceState !== "activating") && (serviceState !== "deactivating"))
+
+    property bool enabledState:  ((unit.unitFileState === "enabled-runtime") || (unit.unitFileState === "enabled"))
+    property bool disabledState: (unit.unitFileState === "disabled")
+
     onActiveStateChanged: {
         if (activeState) { daemonInfo.refreshInfo() }
-    }
-
-    Timer {
-        id: checkState
-        interval: 2000
-        repeat: true
-        running: Qt.application.state == Qt.ApplicationActive
-        onTriggered: {
-            systemdServiceIface.updateProperties()
-        }
     }
 
     Timer {
@@ -28,7 +28,7 @@ Page {
         interval: 15000
         repeat: true
         triggeredOnStart: true
-        running: activeState && Qt.application.state == Qt.ApplicationActive
+        running: activeState && (Qt.application.state == Qt.ApplicationActive)
         onTriggered: {
             daemonInfo.refreshInfo()
         }
@@ -36,70 +36,33 @@ Page {
 
     DBusInterface {
         // qdbus --system org.freedesktop.systemd1 /org/freedesktop/systemd1/unit/i2pd_2eservice org.freedesktop.systemd1.Unit.ActiveState
-        // valuse: "active", "reloading", "inactive", "failed", "activating", and "deactivating"
-        id: systemdServiceIface
+        // values: "active", "reloading", "inactive", "failed", "activating", and "deactivating"
+        id: unit
         bus: DBus.SystemBus
         service: 'org.freedesktop.systemd1'
         path: '/org/freedesktop/systemd1/unit/i2pd_2eservice'
         iface: 'org.freedesktop.systemd1.Unit'
 
-        signalsEnabled: true
-        function updateProperties() {
-            var activeProperty = systemdServiceIface.getProperty("ActiveState")
-            //var enabledProperty = systemdServiceIface.getProperty("UnitFileState")
-            console.debug("ActiveState:", activeProperty)
-            if (activeProperty === "active") {
-                activeState = true
-                startstopSwitch.busy = false
-            }
-            else if (activeProperty === "inactive" || activeProperty === "failed") {
-                activeState = false
-                startstopSwitch.busy = false
-            } else {
-                startstopSwitch.busy = true
-            }
-            /*
-            if (enabledProperty === "enabled") {
-                enabledState = true
-            } else {
-                enabledState = false
-            }
-            */
-        }
+        property string activeState
+        //property string subState
+        property string unitFileState
 
-        onPropertiesChanged: updateProperties()
-        Component.onCompleted: updateProperties()
+        signalsEnabled: true
+        propertiesEnabled: true
     }
 
     DBusInterface {
+        // qdbus --system org.freedesktop.systemd1 /org/freedesktop/systemd1/unit/i2pd_2eservice org.freedesktop.systemd1.Unit.ActiveState
+        // values: "active", "reloading", "inactive", "failed", "activating", and "deactivating"
+        id: manager
         bus: DBus.SystemBus
         service: 'org.freedesktop.systemd1'
         path: '/org/freedesktop/systemd1/unit/i2pd_2eservice'
-        iface: 'org.freedesktop.DBus.Properties'
+        iface: 'org.freedesktop.systemd1.Manager'
 
         signalsEnabled: true
-        onPropertiesChanged: { console.log("updating properties"); systemdServiceIface.updateProperties()}
-        Component.onCompleted: systemdServiceIface.updateProperties()
+        propertiesEnabled: true
     }
-
-    /*
-    DBusInterface {
-        id: systemdManagerIface
-        bus: DBus.SystemBus
-        service: "org.freedesktop.systemd1"
-        path: "/org/freedesktop/systemd1"
-        iface: "org.freedesktop.systemd1.Manager"
-        signalsEnabled: true
-
-        signal unitNew(string name)
-        onUnitNew: {
-            if (name == "i2pd.service") {
-                console.debug("A wild unit appeared!", name);
-                systemdServiceIface.updateProperties()
-            }
-        }
-    }
-    */
 
     Component { id: passdialog
         Dialog {
@@ -155,15 +118,13 @@ Page {
         anchors.fill: parent
         contentHeight: column.height
 
-        Column {
-            id: column
+        Column { id: column
             width: page.width
             spacing: Theme.paddingMedium
 
             PageHeader {
                 title: qsTr("I2P")
-                Image {
-                    id: banner
+                Image { id: banner
                     anchors.centerIn: parent
                     height: parent.height
                     sourceSize.height: height
@@ -173,8 +134,7 @@ Page {
                 }
             }
 
-            ListItem {
-                id: enableItem
+            ListItem { id: enableItem
 
                 contentHeight: startstopSwitch.height
                 _backgroundColor: "transparent"
@@ -184,47 +144,39 @@ Page {
                 showMenuOnPressAndHold: false
                 menu: Component { FavoriteMenu { } }
 
-                TextSwitch {
-                    id: startstopSwitch
+                TextSwitch { id: startstopSwitch
 
                     automaticCheck: false
                     checked: activeState
-                    text: "I2P Service" + " " + ( activeState ? "active" : "inactive" )
+                    busy: inactiveState
+                    enabled: !busy
+
+                    text: "I2P Service" + " " + unit.activeState
                     description: activeState ? qsTr("Stopping may take some time.") : ""
 
-                    onClicked: {
-                        if (startstopSwitch.busy) {
-                            return
-                        }
-                        systemdServiceIface.call(activeState ? "Stop" : "Start", ["replace"])
-                        systemdServiceIface.updateProperties()
-                        startstopSwitch.busy = true
-                    }
+                    onClicked: unit.call(activeState ? "Stop" : "Start", ["replace"])
                 }
             }
-            /*
             TextSwitch {
-                    id: enableSwitch
+                id: enableSwitch
 
-                    automaticCheck: false
-                    checked: enabledState
-                    text: "Start at boot"
-                    onClicked: {
-                        enabledState ?
-                                  systemdManagerIface.typedCall("DisableUnitFiles", [
-                                              { "type": "as", "value":  [ "i2pd.service" ]},        // array of service names
-                                              { "type": "b", "value": "false"}                      // session only?
-                                            ])
-                                : systemdManagerIface.typedCall("EnableUnitFiles", [
-                                              { "type": "as", "value":  [ "i2pd.service" ]},        // array of service names
-                                              { "type": "b", "value": "false"},                     // session only?
-                                              { "type": "b", "value": "false"}                      // force?
-                                            ])
-
-                        systemdServiceIface.updateProperties()
-                    }
+                automaticCheck: false
+                checked: enabledState
+                text: "Start at boot"
+                onClicked: {
+                    enabledState ?
+                        manager.typedCall("DisableUnitFiles", [
+                            { "type": "as", "value":  [ "i2pd.service" ]},        // array of service names
+                            { "type": "b", "value": "false"}                      // session only?
+                        ])
+                        : manager.typedCall("EnableUnitFiles", [
+                            { "type": "as", "value":  [ "i2pd.service" ]},        // array of service names
+                            { "type": "b", "value": "false"},                     // session only?
+                            { "type": "b", "value": "false"}                      // force?
+                        ])
+                }
             }
-            */
+
             Separator { width: parent.width; color: Theme.secondaryColor; anchors.horizontalCenter: parent.horizontalCenter }
             Label { id: daemonInfo
                 width: parent.width - Theme.itemSizeMedium
