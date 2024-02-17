@@ -64,6 +64,7 @@ Notices for SailfishOS:
 %if "%{?vendor}" == "chum"
 PackageName: I2Pd
 Type: console-application
+DeveloperName: Purple I2P
 PackagerName: nephros
 Categories:
  - Network
@@ -104,7 +105,7 @@ participants don't reveal their real IP addresses.
 %if "%{?vendor}" == "chum"
 PackageName: I2Pd Settings UI
 Type: desktop-application
-PackagerName: nephros
+DeveloperLogin: nephros
 Categories:
  - Network
  - P2P

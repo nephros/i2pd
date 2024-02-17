@@ -36,6 +36,7 @@ Description: |
     %if "%{?vendor}" == "chum"
     PackageName: I2Pd
     Type: console-application
+    DeveloperName: Purple I2P
     PackagerName: nephros
     Categories:
      - Network
@@ -118,7 +119,7 @@ SubPackages:
           %if "%{?vendor}" == "chum"
           PackageName: I2Pd Settings UI
           Type: desktop-application
-          PackagerName: nephros
+          DeveloperLogin: nephros
           Categories:
            - Network
            - P2P
