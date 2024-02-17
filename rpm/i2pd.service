@@ -1,7 +1,7 @@
 [Unit]
 Description=I2P Router
 Documentation=https://i2pd.readthedocs.io/en/latest/
-Documentation=https://github.com/nephros/i2pd/blob/main/README.md
+Documentation=https://github.com/nephros/i2pd/blob/master/README.md
 After=network.target
 After=local-fs.target
 After=home.mount
