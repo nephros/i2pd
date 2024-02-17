@@ -1,4 +1,4 @@
-// SPDX-FileCopyrightText: 2022 Peter G. <sailfish@nephros.org>
+// SPDX-FileCopyrightText: 2022-2024 Peter G. <sailfish@nephros.org>
 //
 // SPDX-License-Identifier: Apache-2.0
 
@@ -254,6 +254,17 @@ Page {
                     xhr.send();
                 }
             }
+            ButtonLayout {
+                Button {
+                    text: "Console"
+                    onClicked: Qt.openUrlExternally("http://jolla:@127.0.0.1:7070")
+                }
+                Button {
+                    text: "Test"
+                    onClicked: Qt.openUrlExternally("http://identiguy.i2p/")
+                }
+            }
         }
     }
 }
+// vim: ft=javascript expandtab ts=4 sw=4 st=4
