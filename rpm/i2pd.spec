@@ -13,7 +13,7 @@ Name:       i2pd
 %define with_ui 1
 
 Summary:    End-to-End encrypted and anonymous Internet daemon
-Version:    2.45.1
+Version:    2.50.2
 Release:    1
 Group:      Applications/Internet
 License:    BSD-3-Clause
@@ -64,6 +64,7 @@ Notices for SailfishOS:
 %if "%{?vendor}" == "chum"
 PackageName: I2Pd
 Type: console-application
+DeveloperName: Purple I2P
 PackagerName: nephros
 Categories:
  - Network
@@ -104,7 +105,7 @@ participants don't reveal their real IP addresses.
 %if "%{?vendor}" == "chum"
 PackageName: I2Pd Settings UI
 Type: desktop-application
-PackagerName: nephros
+DeveloperLogin: nephros
 Categories:
  - Network
  - P2P

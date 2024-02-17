@@ -17,7 +17,8 @@ Type=forking
 ExecStart=/usr/bin/i2pd --datadir /home/.system/var/lib/i2pd --conf=/home/.system/var/lib/i2pd/i2pd.conf --tunconf=/home/.system/var/lib/i2pd/tunnels.conf --tunnelsdir=/home/.system/var/lib/i2pd/tunnels.conf.d --pidfile=/run/i2pd/i2pd.pid --daemon --service
 ExecReload=/bin/sh -c "kill -HUP $MAINPID"
 PIDFile=/run/i2pd/i2pd.pid
-
+### Uncomment, if auto restart needed
+#Restart=on-failure
 # we log to stdout:
 StandardOutput=journal+console
 
@@ -31,6 +32,11 @@ SendSIGKILL=yes
 # i2pd stops accepting new tunnels and waits ~10 min while old ones do not die.
 #KillSignal=SIGINT
 #TimeoutStopSec=10m
+
+# If you have problems with hanging i2pd, you can try increase this
+LimitNOFILE=8192
+# To enable write of coredump uncomment this
+#LimitCORE=infinity
 
 [Install]
 WantedBy=multi-user.target
