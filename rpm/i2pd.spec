@@ -251,7 +251,7 @@ fi
 # >> files ui
 %{_datadir}/jolla-settings/entries/i2pd.json
 %{_datadir}/jolla-settings/pages/i2p/*
-%{_datadir}/themes/*/meegotouch/*/icons/*
+%{_datadir}/themes/*/*/*/icons/*
 %{_datadir}/icons/hicolor/scalable/apps/*.svg
 %endif
 # << files ui
