@@ -1,6 +1,6 @@
 Name: i2pd
 Summary: End-to-End encrypted and anonymous Internet daemon
-Version: 2.52.0
+Version: 2.56.0
 Release: 1
 Group: Applications/Internet
 License: BSD-3-Clause
@@ -33,19 +33,19 @@ Description: |
 
       For more information, see the README at https://github.com/nephros/i2pd/blob/master/README.md
 
-    %if "%{?vendor}" == "chum"
-    PackageName: I2Pd
+    %if 0%{?_chum}
+    Title: I2Pd
     Type: console-application
     DeveloperName: Purple I2P
-    PackagerName: nephros
+    PackagedBy: nephros
     Categories:
      - Network
      - P2P
     Custom:
       Repo: https://github.com/PurpleI2P/i2pd
       PackagingRepo: https://github.com/nephros/i2pd
-    Icon: https://i2pd.website/images/favicon.png
-    Url:
+    PackageIcon: https://i2pd.website/images/favicon.png
+    Links:
       Homepage: https://i2pd.website
       Help: https://i2pd.readthedocs.io/en/latest
       Donations: https://i2pd.website/#donations
