@@ -106,6 +106,7 @@ participants don't reveal their real IP addresses.
 PackageName: I2Pd Settings UI
 Type: desktop-application
 DeveloperLogin: nephros
+AIRating: H
 Categories:
  - Network
  - P2P
